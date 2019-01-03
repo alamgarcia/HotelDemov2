@@ -1,14 +1,14 @@
 package com.example.hoteldemoapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import com.example.hoteldemoapp.Activities.LoginActivity
+import com.example.hoteldemoapp.Activities.Reserva
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -20,16 +20,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        var myPreferences = "myPrefs"
+        var sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        var logged = sharedPreferences.getInt("logged", 0)
+        if (logged == 1){
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else{
+            Log.d("Mensajes", "No hay usuario logueado")
+        }
+
+
         reservaimgview.setOnClickListener {
             val intent = Intent(this, Reserva::class.java)
             startActivity(intent)
         }
 
-
         login_btn.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
     }
